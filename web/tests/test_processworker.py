@@ -1,10 +1,12 @@
 '''test for subprocess'''
 import os
 import re
+import pytest
 from web.worker import ProcessWorker
 
 
 # Create your tests here.
+@pytest.mark.skip(reason="too long, check only before commit")
 def test_execute_command():
     '''simple test with long command'''
     os.environ['DJANGO_SETTINGS_MODULE'] = 'web.settings'
