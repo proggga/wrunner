@@ -2,10 +2,15 @@
 import re
 from django.urls import reverse
 from django.test import Client
+from wrunner import celery_app
+from celery.result import AsyncResult
+import pytest
 
 
+@pytest.mark.django_db()
 def test_view_genearate_random_task():
     '''test main view response'''
+    celery_app.conf.update(CELERY_ALWAYS_EAGER=True)
     url = reverse('task-create-indexpage')
     client = Client()
     response = client.get(path=url)
@@ -22,3 +27,4 @@ def test_view_genearate_random_task():
                     r'-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$',
                     url_hash)
     assert url_hash == text_hash
+    assert AsyncResult(url_hash).result == ''

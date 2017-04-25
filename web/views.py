@@ -7,9 +7,9 @@ from celery.result import AsyncResult
 
 def index_view(request):  # pylint: disable=unused-argument
     '''index view, return hello'''
-    command = 'echo "This is first line"; sleep 10; '\
-              'echo "but this is next line"; sleep 10; '\
-              'echo "and the end of text"; sleep 10;'\
+    command = 'echo "This is first line"; sleep 1; '\
+              'echo "but this is next line"; sleep 1; '\
+              'echo "and the end of text"; sleep 1;'\
               'echo "done"'
     task = execute_command_task.delay(command)
     url = reverse('task-status', args=(task.task_id,))
