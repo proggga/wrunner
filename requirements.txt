@@ -1,0 +1,8 @@
+Django==1.10.2
+celery==4.0.0
+django-celery-results==1.0.1
+pylint
+pytest
+coverage
+pytest-cov
+pytest-django
