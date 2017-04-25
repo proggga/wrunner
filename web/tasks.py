@@ -1,12 +1,13 @@
 '''task for celery'''
-from wrunner import CELERY_APP
+# from wrunner import CELERY_APP
+from celery.task import task
 from web.worker import ProcessWorker
 
 
-@CELERY_APP.task(bind=True)
+@task(bind=True)
 def execute_command_task(request, command):
     '''execute command in celery and update result by progress'''
-    print(request)
+    print("request, command:", request, command)
     pworker = ProcessWorker()
     result = 'started command: {}'\
              .format(command)
