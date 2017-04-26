@@ -23,18 +23,18 @@ def test_status_view_none_return():
 
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
-@mock.patch('web.views._get_result')
 @pytest.mark.django_db
-def test_create_task(get_result_method):
+def test_create_task():
     '''test task created and return progress'''
     task_id = '12345678-1234-1234-1234-123456781234'
     command = 'echo "Simple result of task";'
     eager_result = execute_command_task.apply_async(args=(command,),
                                                     task_id=task_id)
-    get_result_method.return_value = eager_result
     url = reverse('task-status', args=(task_id,))
     client = Client()
-    response = client.get(path=url)
+    with mock.patch('web.views.AsyncResult') as asyncresult_class:
+        asyncresult_class.return_value = eager_result
+        response = client.get(path=url)
     match_res = re.match(r'<h1>Result of task 12345678-1234-1234-'
                          r'1234-123456781234</h1><br>(.*)',
                          response.content.decode('utf-8'))
