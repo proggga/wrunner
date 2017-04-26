@@ -18,10 +18,12 @@ def start_view(request):
                         .format(url, task.task_id))
 
 
+def _get_result(task_id):
+    return AsyncResult(task_id)
+
 def get_data(request, task_id):
     '''data status of async command'''
-    task_result = AsyncResult(task_id)
-    print(request, task_id)
+    task_result = _get_result(task_id)
 
     return HttpResponse('<h1>Result of task {}</h1><br>{}'
                         .format(task_id, task_result.result))
