@@ -5,8 +5,9 @@ from web.tasks import execute_command_task
 from celery.result import AsyncResult
 
 
-def index_view(request):  # pylint: disable=unused-argument
+def start_view(request):
     '''index view, return hello'''
+    print(request)
     command = 'echo "This is first line"; sleep 1; '\
               'echo "but this is next line"; sleep 1; '\
               'echo "and the end of text"; sleep 1;'\
@@ -17,7 +18,7 @@ def index_view(request):  # pylint: disable=unused-argument
                         .format(url, task.task_id))
 
 
-def get_data(request, task_id):  # pylint: disable=unused-argument
+def get_data(request, task_id):
     '''data status of async command'''
     task_result = AsyncResult(task_id)
     print(request, task_id)

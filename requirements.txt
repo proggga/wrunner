@@ -6,3 +6,4 @@ pytest
 coverage
 pytest-cov
 pytest-django
+redis==2.10.5

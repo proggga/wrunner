@@ -20,7 +20,8 @@ class ProcessWorker(object):
         process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
         buffer = ''
         while process.poll() is None:
-            buffer += process.stdout.read(8).decode('utf-8')
+            byte_data = process.stdout.read(8)
+            buffer += byte_data.decode('utf-8')
             if '\n' in buffer:
                 lines_array = buffer.split('\n')
                 for line in lines_array[0:-1]:

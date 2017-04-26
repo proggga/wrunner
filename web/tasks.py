@@ -1,5 +1,4 @@
 '''task for celery'''
-# from wrunner import CELERY_APP
 from celery.task import task
 from web.worker import ProcessWorker
 
