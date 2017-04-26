@@ -24,7 +24,7 @@ def test_status_view_none_return():
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
 @pytest.mark.django_db
-def test_create_task():
+def test_result_status_of_completed_task():
     '''test task created and return progress'''
     task_id = '12345678-1234-1234-1234-123456781234'
     command = 'echo "Simple result of task";'
