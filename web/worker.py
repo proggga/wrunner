@@ -38,8 +38,8 @@ class ProcessWorker(object):
         end_of_line = process.stdout.read().decode('utf-8')
         if end_of_line:
             buffer += end_of_line
-        lines_array = buffer.split('\n')
-        for line in lines_array[0:-1]:
-            yield self._store_line_and_return(line + '\n')
-        if lines_array[-1]:
-            yield self._store_line_and_return(lines_array[-1])
+        lines_array = [line for line in buffer.split('\n') if line]
+        lines_count = len(lines_array)
+        for i in range(lines_count):
+            line_return = '\n' if i < lines_count - 1 else ''
+            yield self._store_line_and_return(lines_array[i] + line_return)
