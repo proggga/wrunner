@@ -4,17 +4,22 @@ import unittest.mock as mock
 import pytest
 from web.tasks import execute_command_task
 
+from celery.result import EagerResult
 from django.urls import reverse
 from django.test import Client
 from django.test import override_settings
 
-
-@pytest.mark.django_db
+@override_settings(CELERY_TASK_ALWAYS_EAGER=True)
 def test_status_view_none_return():
     '''test status return content with uuids and status'''
-    url = reverse('task-status', args=('12345678-1234-1234-1234-123456781234',))
+    task_id = '12345678-1234-1234-1234-123456781234'
+    url = reverse('task-status', args=(task_id,))
     client = Client()
-    response = client.get(path=url)
+    with mock.patch('web.views.AsyncResult') as asyncresult_class:
+        asyncresult_class.return_value = EagerResult(id=task_id,
+                                                     ret_value=None,
+                                                     state='PENDING')
+        response = client.get(path=url)
     match_res = re.match(r'<h1>Result of task 12345678-1234-1234-'
                          r'1234-123456781234</h1><br>(.*)',
                          response.content.decode('utf-8'))
