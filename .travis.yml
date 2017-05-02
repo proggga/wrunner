@@ -9,6 +9,8 @@ python:
 install:
     - pip install -r requirements.txt
     - pip install coveralls
+before_install:
+  - pip install --upgrade pytest
 script:
     - coverage run --source='.' -m pytest
 after_success:
