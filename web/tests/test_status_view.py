@@ -1,6 +1,6 @@
 '''test status view'''
 import re
-import unittest.mock as mock
+import mock as mock
 import pytest
 from web.tasks import execute_command_task
 

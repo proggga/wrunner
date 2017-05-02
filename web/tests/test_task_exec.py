@@ -1,5 +1,5 @@
 '''test task with exec'''
-import unittest.mock as mock
+import mock as mock
 import pytest
 from django.test import override_settings
 from web.tasks import execute_command_task
