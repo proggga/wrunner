@@ -3,9 +3,9 @@ import re
 from django.urls import reverse
 from django.test import Client
 import pytest
+from django.test import override_settings
 
-
-@pytest.mark.celery(result_backend='cache', cache_backend='memory')
+@override_settings(CELERY_TASK_ALWAYS_EAGER=True)
 def test_start_view_content():
     '''test /start return content with uuids'''
     url = reverse('task-create-startpage')
