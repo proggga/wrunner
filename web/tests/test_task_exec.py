@@ -7,7 +7,7 @@ from web.tasks import execute_command_task
 
 @mock.patch('web.tasks.execute_command_task.update_state')
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
-@pytest.mark.celery(result_backend='redis://')
+@pytest.mark.celery(result_backend='cache', cache_backend='memory')
 @pytest.mark.django_db
 def test_create_task(update_state_method):
     '''test task created and return progress'''
