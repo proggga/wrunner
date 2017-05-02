@@ -40,5 +40,5 @@ def test_result_status_of_completed_task():
                          response.content.decode('utf-8'))
     assert match_res
     message = {'stdout': 'started command: echo "Simple result of task";\n'
-                         'Simple result of task'}
+                         'Simple result of task\n'}
     assert match_res.group(1) == str(message)

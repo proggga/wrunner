@@ -8,7 +8,8 @@ class ProcessWorker(object):
 
     def __init__(self):
         self._result_lines = None
-
+        self.buffer = None
+        self.process = None
 
     def get_content(self):
         '''get content of last result lines'''
@@ -20,26 +21,39 @@ class ProcessWorker(object):
         self._result_lines += line
         return line
 
+    def read_lines_from_process_stdout(self, flush_buffer=False):
+        bytes_count = 16 if flush_buffer else -1  # 16 bytes
+        byte_data = self.process.stdout.read(bytes_count)
+        self.buffer += byte_data.decode('utf-8')
+        if '\n' in self.buffer or flush_buffer:
+            lines_array = self.buffer.split('\n')
+            if lines_array[-1] == '':
+                del lines_array[-1]
+                lines_array[-1] += '\n'
+            lines_count = len(lines_array)
+            if not flush_buffer:
+                self.buffer = lines_array[-1]
+                lines_count -= 1
+            for i in range(lines_count):
+                line = lines_array[i]
+                if flush_buffer and i + 1 == lines_count and line != '':
+                    line_return = ''
+                else:
+                    line_return = '\n'
+                yield self._store_line_and_return(line + line_return)
 
     def execute(self, command):
         '''simple test with long command'''
         self._result_lines = ''
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-        buffer = ''
-        while process.poll() is None:
-            byte_data = process.stdout.read(8)
-            buffer += byte_data.decode('utf-8')
-            if '\n' in buffer:
-                lines_array = buffer.split('\n')
-                for line in lines_array[0:-1]:
-                    yield self._store_line_and_return(line + '\n')
-                buffer = lines_array[-1]
+        self.buffer = ''
+        self.process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+        while self.process.poll() is None:
+            for line in self.read_lines_from_process_stdout():
+                yield line
             time.sleep(0.1)
-        end_of_line = process.stdout.read().decode('utf-8')
-        if end_of_line:
-            buffer += end_of_line
-        lines_array = [line for line in buffer.split('\n') if line]
-        lines_count = len(lines_array)
-        for i in range(lines_count):
-            line_return = '\n' if i < lines_count - 1 else ''
-            yield self._store_line_and_return(lines_array[i] + line_return)
+        for line in self.read_lines_from_process_stdout(flush_buffer=True):
+            yield line
+        del self.process
+        del self.buffer
+        self.buffer = None
+        self.process = None
