@@ -25,4 +25,4 @@ def test_create_task(update_state_method):
     result += 'end'
     calls.append(mock.call(state='PROGRESS', meta={'stdout': result}))
     update_state_method.assert_has_calls(calls)
-    assert task.status == 'SUCCESS'
+    assert 'SUCCESS' == task.status

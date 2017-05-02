@@ -18,8 +18,8 @@ def test_status_view_none_return():
     match_res = re.match(r'<h1>Result of task 12345678-1234-1234-'
                          r'1234-123456781234</h1><br>(.*)',
                          response.content.decode('utf-8'))
-    assert match_res
-    assert match_res.group(1) == 'None'
+    assert match_res, 'Task status regex not found in GET response'
+    assert 'None' == match_res.group(1), "Task status return not NONE result in response"
 
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
@@ -38,7 +38,7 @@ def test_result_status_of_completed_task():
     match_res = re.match(r'<h1>Result of task 12345678-1234-1234-'
                          r'1234-123456781234</h1><br>(.*)',
                          response.content.decode('utf-8'))
-    assert match_res
+    assert match_res, 'Task status return response is not valid by regexp'
     message = {'stdout': 'started command: echo "Simple result of task";\n'
                          'Simple result of task\n'}
-    assert match_res.group(1) == str(message)
+    assert str(message) == match_res.group(1), "Not equal result message and regexp group"

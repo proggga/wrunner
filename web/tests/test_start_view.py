@@ -13,12 +13,10 @@ def test_start_view_content():
                          r'<a href=".*status/([a-zA-Z0-9\-]+)">'
                          r'([a-zA-Z0-9\-]+)</a></h1',
                          response.content.decode('utf-8'))
-    assert match_res
+    assert match_res, 'Create task response not found by regexp'
     url_hash = match_res.group(1)
     text_hash = match_res.group(2)
-    hash_lenght = len(url_hash)
-    assert hash_lenght > 0
     assert re.match(r'^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}'
                     r'-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$',
-                    url_hash)
-    assert url_hash == text_hash
+                    url_hash), 'UUID not valid uuid'
+    assert url_hash == text_hash, 'Task uuid and uuid in link doesn\' equals'
