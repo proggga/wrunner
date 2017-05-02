@@ -2,8 +2,10 @@
 import re
 from django.urls import reverse
 from django.test import Client
+import pytest
 
 
+@pytest.mark.celery(result_backend='redis://')
 def test_start_view_content():
     '''test /start return content with uuids'''
     url = reverse('task-create-startpage')

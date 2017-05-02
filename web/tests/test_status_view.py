@@ -10,6 +10,7 @@ from django.test import Client
 from django.test import override_settings
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
+@pytest.mark.celery(result_backend='redis://')
 def test_status_view_none_return():
     '''test status return content with uuids and status'''
     task_id = '12345678-1234-1234-1234-123456781234'
@@ -28,6 +29,7 @@ def test_status_view_none_return():
 
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
+@pytest.mark.celery(result_backend='redis://')
 @pytest.mark.django_db
 def test_result_status_of_completed_task():
     '''test task created and return progress'''
