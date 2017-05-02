@@ -45,6 +45,6 @@ def test_result_status_of_completed_task():
                          r'1234-123456781234</h1><br>(.*)',
                          response.content.decode('utf-8'))
     assert match_res, 'Task status return response is not valid by regexp'
-    message = {'stdout': 'started command: echo "Simple result of task";\n'
-                         'Simple result of task\n'}
+    message = {"stdout": u"started command: echo \"Simple result of task\";\n"
+                         "Simple result of task\n"}
     assert str(message) == match_res.group(1), "Not equal result message and regexp group"
