@@ -12,6 +12,6 @@ install:
 before_install:
   - pip install --upgrade pytest
 script:
-    - coverage run --source='.' -m pytest
+    - coverage run --source='.' -m pytest --pylint
 after_success:
     - coveralls

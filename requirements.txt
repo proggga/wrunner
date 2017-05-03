@@ -9,3 +9,4 @@ pytest-cov
 pytest-django
 redis==2.10.5
 mock
+pytest-pylint

@@ -2,8 +2,8 @@
 import re
 from django.urls import reverse
 from django.test import Client
-import pytest
 from django.test import override_settings
+
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
 def test_start_view_content():

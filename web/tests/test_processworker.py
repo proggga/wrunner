@@ -22,7 +22,8 @@ def test_worker_return_stdout():
     for current_line in worker.execute(bash_command):
         assert line_number < lines_count, 'Strange extra result: "{}"'\
             .format(current_line)
-        assert stdout_example[line_number] == current_line, 'Not equal example line and yield response'
+        assert stdout_example[line_number] == current_line, \
+            'Not equal example line and yield response'
         line_number = line_number + 1
     assert line_number == lines_count, 'Not all result returned'
     assert worker.get_content() == ''.join(stdout_example)
