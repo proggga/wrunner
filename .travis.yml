@@ -2,15 +2,11 @@ language: python
 python:
   - "2.7"
   - "3.6"
-  - "3.6-dev" # 3.6 development branch
-  - "3.7-dev" # 3.7 development branch
-  - "nightly" # currently points to 3.7-dev
-# command to install dependencies
+before_install:
+  - pip install --upgrade pytest
 install:
     - pip install -r requirements.txt
     - pip install coveralls
-before_install:
-  - pip install --upgrade pytest
 script:
     - coverage run --source='.' -m pytest --pylint --flake8
 after_success:
