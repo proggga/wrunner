@@ -1,8 +1,9 @@
 '''simple view'''
+from celery.result import AsyncResult
 from django.http import HttpResponse
 from django.urls import reverse
+
 from web.tasks import execute_command_task
-from celery.result import AsyncResult
 
 
 def start_view(request):   # pylint: disable=unused-argument

@@ -12,6 +12,6 @@ install:
 before_install:
   - pip install --upgrade pytest
 script:
-    - coverage run --source='.' -m pytest --pylint
+    - coverage run --source='.' -m pytest --pylint --flake8
 after_success:
     - coveralls

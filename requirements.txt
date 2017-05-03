@@ -3,9 +3,11 @@ amqp==2.1.4
 celery==4.0.0
 django-celery-results==1.0.1
 pylint
-pytest
+flake8
 coverage
+pytest
 pytest-cov
+pytest-flake8
 pytest-django
 redis==2.10.5
 mock

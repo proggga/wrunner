@@ -1,8 +1,9 @@
 '''test main view'''
 import re
-from django.urls import reverse
+
 from django.test import Client
 from django.test import override_settings
+from django.urls import reverse
 
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)

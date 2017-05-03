@@ -1,13 +1,15 @@
 '''test status view'''
 import re
-import mock as mock
+
+import mock
 import pytest
-from web.tasks import execute_command_task
 
 from celery.result import EagerResult
-from django.urls import reverse
 from django.test import Client
 from django.test import override_settings
+from django.urls import reverse
+
+from web.tasks import execute_command_task
 
 
 @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
