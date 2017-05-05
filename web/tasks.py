@@ -13,7 +13,7 @@ def execute_command_task(request, command):
     execute_command_task.update_state(state='PROGRESS',
                                       meta={'stdout': result})
     for line in pworker.execute(command):
-        result += line
+        result += line + '\n'
         execute_command_task.update_state(state='PROGRESS',
                                           meta={'stdout': result})
     return {'stdout': result}

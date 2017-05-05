@@ -11,10 +11,10 @@ def test_worker_return_stdout():
                    'echo "fastmessage";'\
                    'echo "fastmessage";'\
                    'echo -n "end"'
-    stdout_example = ['start\n',
-                      'message\n',
-                      'fastmessage\n',
-                      'fastmessage\n',
+    stdout_example = ['start',
+                      'message',
+                      'fastmessage',
+                      'fastmessage',
                       'end']
     worker = ProcessWorker()
     line_number = 0
