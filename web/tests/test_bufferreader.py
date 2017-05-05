@@ -46,7 +46,7 @@ def test_reads_with_some_buffer():
     attrs = {'stdout.read.return_value': b'line\nbuff'}
     process = mock.Mock(**attrs)
     old_buffer = 'simple '
-    buf_reader = BufferReader(process, '\n', buffer=old_buffer)
+    buf_reader = BufferReader(process, '\n', last_buffer=old_buffer)
     lines = buf_reader.read()
     assert lines[0] == 'simple line'
     assert len(lines) == 1

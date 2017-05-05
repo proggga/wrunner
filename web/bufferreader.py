@@ -4,10 +4,10 @@
 class BufferReader(object):
     '''Read from Popen process to buffer'''
 
-    def __init__(self, process, split_char, buffer=''):
+    def __init__(self, process, split_char, last_buffer=''):
         self._process = process
         self._split_char = split_char
-        self._buffer = buffer
+        self._buffer = last_buffer
         self.bytes_count = 8
         self.lines_array = []
 
