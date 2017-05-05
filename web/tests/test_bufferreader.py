@@ -28,7 +28,7 @@ def test_reads_empty_buffer():
     process = mock.Mock(**attrs)
     buf_reader = BufferReader(process, '\n')
     lines = buf_reader.read()
-    assert lines == ()
+    assert lines == []
 
 
 def test_reads_store_buffer():
@@ -38,6 +38,7 @@ def test_reads_store_buffer():
     buf_reader = BufferReader(process, '\n')
     lines = buf_reader.read()
     assert lines[0] == 'line'
+    assert buf_reader.get_buffer() == 'stored line'
     assert len(lines) == 1
 
 
@@ -49,4 +50,5 @@ def test_reads_with_some_buffer():
     buf_reader = BufferReader(process, '\n', last_buffer=old_buffer)
     lines = buf_reader.read()
     assert lines[0] == 'simple line'
+    assert buf_reader.get_buffer() == 'buff'
     assert len(lines) == 1

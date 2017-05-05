@@ -15,7 +15,7 @@ class BufferReader(object):
         '''read from buffer and return lines'''
         self._read_stdout()  # reading from buffer
         if self._need_skip_reading():
-            return ()
+            return []
         self.lines_array = self._split_buffer_to_lines()
         result = self._format_result()
         return result
@@ -31,7 +31,7 @@ class BufferReader(object):
 
     def _format_result(self):
         '''format result from buffer'''
-        return self.lines_array
+        return list(self.lines_array)
 
     def get_buffer(self):
         '''return stored buffer'''

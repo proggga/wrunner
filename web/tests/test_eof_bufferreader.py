@@ -21,4 +21,5 @@ def test_read_simple_to_eof():
     lines = eof_breader.read()
     assert lines[0] == 'simple data'
     assert lines[1] == 'need_read_too'
+    assert eof_breader.get_buffer() == ''
     assert len(lines) == 2

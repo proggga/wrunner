@@ -15,4 +15,5 @@ class EofBufferReader(BufferReader):
         result = list(self.lines_array)
         if self._buffer:
             result.append(self._buffer)
+            self._buffer = ''
         return result
